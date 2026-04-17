@@ -1,0 +1,19 @@
+title: Failed SSH Login
+id: gs-001
+status: stable
+description: Detects failed SSH login attempts indicating potential unauthorized access.
+author: GhostSIEM
+date: 2026/01/01
+logsource:
+    product: linux
+    service: auth
+level: high
+detection:
+    selection:
+        message|contains: "Failed password"
+    condition: selection
+tags:
+    - attack.initial_access
+    - attack.t1078
+falsepositives:
+    - Legitimate users mistyping their password

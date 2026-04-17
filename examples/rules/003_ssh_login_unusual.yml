@@ -1,0 +1,19 @@
+title: SSH Login From Unusual Source
+id: gs-003
+status: experimental
+description: Detects successful SSH logins which may originate from unusual or external sources.
+author: GhostSIEM
+date: 2026/01/01
+logsource:
+    product: linux
+    service: auth
+level: medium
+detection:
+    selection:
+        message|contains: "Accepted"
+    condition: selection
+tags:
+    - attack.initial_access
+    - attack.t1078
+falsepositives:
+    - Legitimate remote administration

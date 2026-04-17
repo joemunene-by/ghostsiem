@@ -1,0 +1,23 @@
+title: SSH Brute Force Attempt
+id: gs-002
+status: stable
+description: Detects 5 or more failed SSH logins from the same source IP within 60 seconds, indicating a brute force attack.
+author: GhostSIEM
+date: 2026/01/01
+logsource:
+    product: linux
+    service: auth
+level: critical
+detection:
+    selection:
+        message|contains: "Failed password"
+    threshold:
+        field: src_ip
+        value: 5
+    timeframe: "60s"
+    condition: selection
+tags:
+    - attack.credential_access
+    - attack.t1110.001
+falsepositives:
+    - Automated systems with misconfigured credentials

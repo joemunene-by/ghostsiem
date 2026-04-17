@@ -1,0 +1,21 @@
+title: Sudo Command Executed
+id: gs-004
+status: stable
+description: Detects execution of commands via sudo, which may indicate privilege escalation.
+author: GhostSIEM
+date: 2026/01/01
+logsource:
+    product: linux
+    service: auth
+level: medium
+detection:
+    selection:
+        message|contains: "COMMAND="
+    filter:
+        message|contains: "pam_unix"
+    condition: selection and not filter
+tags:
+    - attack.privilege_escalation
+    - attack.t1548.003
+falsepositives:
+    - Normal administrative activity

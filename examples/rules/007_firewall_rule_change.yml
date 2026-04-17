@@ -1,0 +1,23 @@
+title: Firewall Rule Change Detected
+id: gs-007
+status: stable
+description: Detects modifications to firewall rules via iptables or ufw.
+author: GhostSIEM
+date: 2026/01/01
+logsource:
+    product: linux
+    service: syslog
+level: high
+detection:
+    selection_iptables:
+        message|contains: "iptables"
+    selection_ufw:
+        message|contains: "ufw"
+    filter_status:
+        message|contains: "STATUS"
+    condition: 1 of selection* and not filter_status
+tags:
+    - attack.defense_evasion
+    - attack.t1562.004
+falsepositives:
+    - Legitimate firewall management

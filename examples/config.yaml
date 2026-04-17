@@ -1,0 +1,48 @@
+# GhostSIEM Configuration
+# See README.md for full reference
+
+log_level: INFO
+
+# Collectors: define log sources to monitor
+collectors:
+  - type: syslog
+    name: syslog
+    path: /var/log/syslog
+    poll_interval: 1.0
+
+  - type: auth
+    name: auth
+    path: /var/log/auth.log
+    poll_interval: 1.0
+
+  # - type: json
+  #   name: app-logs
+  #   path: /var/log/app/events.json
+  #   poll_interval: 2.0
+
+# Detection engine settings
+detection:
+  rules_dir: examples/rules
+
+# Alert handlers
+alerts:
+  dedup_window: 300  # 5 minutes
+  handlers:
+    - type: console
+
+    - type: file
+      path: alerts.jsonl
+
+    # - type: webhook
+    #   url: https://hooks.slack.com/services/XXX
+    #   headers:
+    #     Content-Type: application/json
+
+# Storage
+storage:
+  path: ghostsiem.db
+
+# API server
+api:
+  host: 0.0.0.0
+  port: 8080

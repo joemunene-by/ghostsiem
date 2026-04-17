@@ -1,0 +1,25 @@
+title: Large Outbound Data Transfer Indicator
+id: gs-008
+status: experimental
+description: Detects log entries that may indicate large outbound data transfers, potential data exfiltration.
+author: GhostSIEM
+date: 2026/01/01
+logsource:
+    product: linux
+    service: syslog
+level: high
+detection:
+    selection_scp:
+        message|contains: "scp"
+    selection_rsync:
+        message|contains: "rsync"
+    selection_curl_upload:
+        message|contains: "curl"
+    selection_wget:
+        message|contains: "wget"
+    condition: 1 of selection*
+tags:
+    - attack.exfiltration
+    - attack.t1048
+falsepositives:
+    - Normal file transfers and system updates
